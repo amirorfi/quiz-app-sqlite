@@ -1,50 +1,43 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+-- Créer la table users (équivalent de votre table SQLite)
+CREATE TABLE IF NOT EXISTS users (
+    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    full_name text NOT NULL,
+    email text NOT NULL UNIQUE,
+    mobile text NOT NULL,
+    signed_up_at timestamptz DEFAULT now()
+);
 
-const dbDir = process.env.DATABASE_DIR || '.';
-const DB_FILE_NAME = "quiz_database.sqlite";
-const DB_SOURCE = path.join(dbDir, DB_FILE_NAME);
+-- Créer la table quiz_submissions (équivalent de votre table SQLite)
+CREATE TABLE IF NOT EXISTS quiz_submissions (
+    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    user_email text NOT NULL,
+    score integer NOT NULL,
+    total_questions integer NOT NULL,
+    percentage decimal NOT NULL,
+    time_taken integer,
+    submitted_at timestamptz DEFAULT now(),
+    FOREIGN KEY (user_email) REFERENCES users(email)
+);
 
-console.log(`[DB] Attempting to connect to database at: ${DB_SOURCE}`);
+-- Activer Row Level Security (RLS)
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE quiz_submissions ENABLE ROW LEVEL SECURITY;
 
-const db = new sqlite3.Database(DB_SOURCE, (err) => {
-    if (err) {
-        console.error("[DB] Error opening database:", err.message);
-        console.error("[DB] Full error object:", err);
-        if (process.env.NODE_ENV === 'production') {
-            console.error("[DB] CRITICAL: Database could not be opened. Exiting.");
-            process.exit(1);
-        }
-        throw err;
-    } else {
-        console.log('[DB] Connected to the SQLite database.');
-        db.serialize(() => {
-            db.run(`CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                fullName TEXT NOT NULL,
-                email TEXT NOT NULL UNIQUE,
-                mobile TEXT NOT NULL,
-                signedUpAt DATETIME DEFAULT CURRENT_TIMESTAMP
-            )`, (err) => {
-                if (err) console.error("[DB] Error creating users table:", err.message);
-                else console.log("[DB] Users table checked/created.");
-            });
+-- Politiques de sécurité basiques (à ajuster selon vos besoins)
+-- Permettre à tous de lire et insérer (vous pouvez être plus restrictif)
+CREATE POLICY "Users can be created by anyone" ON users
+    FOR INSERT WITH CHECK (true);
 
-            db.run(`CREATE TABLE IF NOT EXISTS quiz_submissions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_email TEXT NOT NULL,
-                score INTEGER NOT NULL,
-                totalQuestions INTEGER NOT NULL,
-                percentage REAL NOT NULL,
-                timeTaken INTEGER,
-                submittedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_email) REFERENCES users(email)
-            )`, (err) => {
-                if (err) console.error("[DB] Error creating quiz_submissions table:", err.message);
-                else console.log("[DB] Quiz submissions table checked/created.");
-            });
-        });
-    }
-});
+CREATE POLICY "Users can read their own data" ON users
+    FOR SELECT USING (true);
 
-module.exports = db;
+CREATE POLICY "Quiz submissions can be created" ON quiz_submissions
+    FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Quiz submissions can be read" ON quiz_submissions
+    FOR SELECT USING (true);
+
+-- Index pour optimiser les requêtes
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_quiz_submissions_user_email ON quiz_submissions(user_email);
+CREATE INDEX IF NOT EXISTS idx_quiz_submissions_submitted_at ON quiz_submissions(submitted_at);

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr"> <!-- Set language to French -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Hypertension</title> <!-- French Title -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="quiz-active-view">
+             <div class="logo-container" style="width: 100px; height: 100px; margin-bottom: 15px;"> <!-- Smaller logo on quiz page -->
+                <div class="logo-glow" style="width: 110%; height: 110%;"></div>
+                <img src="logo.png" alt="Logo" class="logo-image">
+            </div>
+            <h1>Quiz Hypertension</h1>
+            <div id="userInfo">Bienvenue, <span id="userNameDisplay">Utilisateur</span>!</div> <!-- French -->
+            <div id="timer">Temps Restant: <span id="time">--:--</span></div> <!-- French -->
+            <form id="quizForm">
+                <div id="quiz-container">
+                    <!-- Questions will be loaded here by JavaScript -->
+                </div>
+                <button type="submit" id="submitQuiz">Soumettre le Quiz</button> <!-- French -->
+            </form>
+        </div>
+
+        <div id="result-container" style="display:none;">
+            <!-- Result will be populated here -->
+        </div>
+    </div>
+
+    <script src="client-quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr"> <!-- Set language to French -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription au Quiz</title> <!-- French Title -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-glow"></div>
+            <img src="logo.png" alt="Logo Dr. Amira Abbassi" class="logo-image">
+        </div>
+
+        <h1>Inscription au Quiz</h1>
+        <p class="tagline">Veuillez entrer vos informations pour commencer.</p> <!-- French Tagline -->
+
+        <form id="signupForm">
+            <div>
+                <label for="fullName" class="sr-only">Nom Complet</label>
+                <input type="text" id="fullName" placeholder="Nom Complet" required>
+            </div>
+            <div>
+                <label for="email" class="sr-only">Adresse E-mail</label>
+                <input type="email" id="email" placeholder="Adresse E-mail" required>
+            </div>
+            <div>
+                <label for="mobile" class="sr-only">Numéro de Téléphone</label>
+                <input type="tel" id="mobile" placeholder="Numéro de Téléphone" required>
+            </div>
+            <button type="submit" id="submitButton">Commencer le Quiz</button> <!-- French Button Text -->
+        </form>
+        <div id="message"></div>
+    </div>
+    <script src="client-signup.js"></script>
+</body>
+</html>

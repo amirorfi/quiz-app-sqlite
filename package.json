@@ -1,0 +1,26 @@
+{
+  "name": "quiz-app-sqlite-vscode",
+  "version": "1.0.0",
+  "description": "Quiz app with Node.js, Express, and SQLite for Render deployment",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "quiz",
+    "nodejs",
+    "express",
+    "sqlite",
+    "render"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

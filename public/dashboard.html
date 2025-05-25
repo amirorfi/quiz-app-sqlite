@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Quiz Analytics</title>
+    <link rel="stylesheet" href="style.css"> <!-- Assumes style.css is up-to-date -->
+    <style>
+        /* Additional styles specific to dashboard (can be moved to style.css) */
+        .dashboard-container {
+            max-width: 1000px; /* Wider for dashboard */
+            text-align: left;
+        }
+        .stat-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e0e6f1;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex: 1; /* For equal distribution in flex container */
+            min-width: 200px; /* Minimum width for stat cards */
+            margin: 10px; /* Spacing around cards */
+        }
+        .stat-card h3 {
+            margin-top: 0;
+            color: #4682B4; /* Steel Blue */
+            font-size: 1rem;
+        }
+        .stat-card p {
+            font-size: 1.8rem; /* Larger stat numbers */
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 5px;
+        }
+        #stats-overview {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+            gap: 15px; /* Spacing between cards */
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem; /* Slightly smaller table font for more data */
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 10px 12px; /* Adjusted padding */
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #e9ecef;
+            color: #495057;
+            font-weight: 600;
+            white-space: nowrap; /* Prevent headers from wrapping */
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #f8f9fa;
+        }
+        tbody tr:hover {
+            background-color: #e7f3ff;
+        }
+        .sort-buttons {
+            margin-bottom: 15px;
+            text-align: right; /* Align sort button to the right */
+        }
+        .sort-buttons button {
+            /* width: auto; // Already handled by main button style if not full-width */
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            margin-left: 10px; /* Spacing if multiple sort buttons */
+        }
+         th.rank-column, td.rank-column { text-align: center; width: 60px; }
+    </style>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <div class="quiz-page-logo" style="text-align: center;">
+             <div class="logo-container" style="width: 100px; height: 100px; margin-bottom: 15px;">
+                <div class="logo-glow" style="width: 110%; height: 110%;"></div>
+                <img src="logo.png" alt="Logo" class="logo-image">
+            </div>
+        </div>
+        <h1>Tableau de Bord - Analytiques du Quiz</h1>
+
+        <div id="stats-overview">
+            <div class="stat-card">
+                <h3>Participants Total</h3>
+                <p id="total-participants">Chargement...</p>
+            </div>
+            <div class="stat-card">
+                <h3>Taux de Réussite Moyen</h3>
+                <p id="avg-success-rate">Chargement...</p>
+            </div>
+            <div class="stat-card">
+                <h3>Soumissions Totales</h3>
+                <p id="total-submissions">Chargement...</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 30px;">Classement des Participants</h2>
+        <div class="sort-buttons">
+            <button id="sort-by-rank">Actualiser le Classement</button>
+        </div>
+        <div style="overflow-x: auto;">
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th class="rank-column">Rang</th>
+                        <th>Nom du Participant</th> <!-- CHANGED HERE -->
+                        <th>Score</th>
+                        <th>Total Q.</th> <!-- Abbreviated for space -->
+                        <th>Réussite (%)</th>
+                        <th>Temps Pris</th>
+                        <th>Date Soumission</th> <!-- Abbreviated -->
+                    </tr>
+                </thead>
+                <tbody id="results-tbody">
+                    <tr><td colspan="7">Chargement des résultats...</td></tr>
+                </tbody>
+            </table>
+        </div>
+         <button onclick="window.location.href='index.html'" style="margin-top: 30px;">Retour à l'inscription</button>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
